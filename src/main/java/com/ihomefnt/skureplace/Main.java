@@ -31,7 +31,7 @@ public class Main {
     @SneakyThrows
     public static void skuRead() {
         String replaceSkuConfigJsonPath = FileUtil.getPath() + File.separator + "replace-sku-config.json";
-        String excelPath = FileUtil.getPath() + File.separator + "sku1.xlsx";
+        String excelPath = FileUtil.getPath() + File.separator + "sku.xlsx";
 
         JSONReader replaceSkuConfigJsonReader = getJsonReader(replaceSkuConfigJsonPath);
         ReplaceSkuConfig replaceSkuConfig = replaceSkuConfigJsonReader.readObject(ReplaceSkuConfig.class);
@@ -43,7 +43,27 @@ public class Main {
         EasyExcel.read(excelPath, ExcelReplaceSku.class, new PageReadListener<ExcelReplaceSku>(dataList -> {
             for (ExcelReplaceSku excelReplaceSku : dataList) {
                 if (originMap.containsKey(excelReplaceSku.getSkuId())) {
-                    originMap.get(excelReplaceSku.getSkuId()).getReplaceSkuIds().add(excelReplaceSku.getSkuId());
+                    Set<Long> replaceSkuIds = originMap.get(excelReplaceSku.getSkuId()).getReplaceSkuIds();
+                    if (Objects.nonNull(excelReplaceSku.getReplaceSkuId1())) {
+                        replaceSkuIds.add(excelReplaceSku.getReplaceSkuId1());
+
+                    }
+                    if (Objects.nonNull(excelReplaceSku.getReplaceSkuId2())) {
+                        replaceSkuIds.add(excelReplaceSku.getReplaceSkuId2());
+
+                    }
+                    if (Objects.nonNull(excelReplaceSku.getReplaceSkuId3())) {
+                        replaceSkuIds.add(excelReplaceSku.getReplaceSkuId3());
+
+                    }
+                    if (Objects.nonNull(excelReplaceSku.getReplaceSkuId4())) {
+                        replaceSkuIds.add(excelReplaceSku.getReplaceSkuId4());
+
+                    }
+                    if (Objects.nonNull(excelReplaceSku.getReplaceSkuId5())) {
+                        replaceSkuIds.add(excelReplaceSku.getReplaceSkuId5());
+
+                    }
                 } else {
                     ReplaceSkuConfig.Sku sku = new ReplaceSkuConfig.Sku();
                     sku.setSkuId(excelReplaceSku.getSkuId());
